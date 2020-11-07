@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "./Socket";
-import AudioPlayer from "./AudioPlayer";
 import { Buttons } from "./Buttons";
+import AudioPlayer from "./AudioPlayer";
 
-const audioPlayer = AudioPlayer();
+const audioPlayers = {};
 
 export function Content() {
   const [instrument, setInstrument] = useState("acoustic_grand_piano");
 
-  const playSound = (note) => {
-    audioPlayer.playNote(note);
-  };
-
   useEffect(() => {
-    audioPlayer.setInstrument(instrument);
+    audioPlayers[instrument] = AudioPlayer();
+    audioPlayers[instrument].setInstrument(instrument);
+
+    socket.on("key_up", (data) => {});
+
     socket.on("key_down", (data) => {
-      playSound(data["note"]);
+      playSound(data["note"], data["instrument"]);
     });
   }, []);
 
-  return (
-    <div>
-      <Buttons />
-    </div>
-  );
+  const playSound = (note, instrument = instrument) => {
+    if (!audioPlayers.hasOwnProperty(instrument)) {
+      audioPlayers[instrument] = AudioPlayer();
+    }
+    audioPlayers[instrument].playNote(note);
+  };
+
+  return <Buttons playSound={playSound} instrument={instrument} />;
 }
