@@ -1,27 +1,45 @@
-import flask, os
-from flask_socketio import SocketIO, emit
+import os
+import flask
+import flask_socketio
 
 app = flask.Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = flask_socketio.SocketIO(app)
+socketio.init_app(app, cors_allowed_origins="*")
+
+items = []
 
 @socketio.on("key_up")
 def key_up(key_data):
-    emit(
+    print("Key up")
+    socketio.emit(
         "key_up",
         {"note": key_data["note"], "instrument": key_data["instrument"]},
     )
 
 @socketio.on("key_down")
 def key_down(key_data):
-    emit(
+    print("Key down")
+    socketio.emit(
         "key_down",
         {"note": key_data["note"], "instrument": key_data["instrument"]},
     )
 
-if __name__ == "__main__":
+@socketio.on('connect')
+def connect():
+    print("Conected")
+    socketio.emit(
+        "key_down",
+        {"note": "aa", "instrument": "instrument"},
+    )
+
+@app.route('/')
+def hello():
+    return flask.render_template('index.html')
+
+if __name__ == '__main__': 
     socketio.run(
         app,
-        port=int(os.getenv("PORT", 8080)),
-        host=os.getenv("IP", "0.0.0.0"),
-        debug=True,
+        host=os.getenv('IP', '0.0.0.0'),
+        port=int(os.getenv('PORT', 8080)),
+        debug=True
     )
