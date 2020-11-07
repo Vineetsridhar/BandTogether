@@ -20,11 +20,11 @@ export function Content() {
 
     const getAllButton = () => {
         let buttons = [];
-        TONES.forEach(TONE => {
-            OCTAVE_NUMBERS.forEach(OCTAVE => {
-                const note = TONE+OCTAVE
+        OCTAVE_NUMBERS.forEach(OCTAVE => {
+            TONES.forEach(TONE => {
+                const note = TONE + OCTAVE
                 buttons.push(
-                    <button onClick={()=> {onClick(note)}}>{note}</button>
+                    <button onClick={() => { onClick(note) }}>{note}</button>
                 )
             })
         })
