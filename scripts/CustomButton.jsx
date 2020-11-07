@@ -1,0 +1,25 @@
+import React, { useEffect, useState } from "react";
+import { socket } from "./Socket";
+import AudioPlayer from "./AudioPlayer";
+import { Stack, TextField, DefaultButton } from "office-ui-fabric-react";
+
+export const CustomButton = ({ note, instrument, playSound }) => {
+  const sendToServer = (event) => {
+    playSound(note);
+    socket.emit(event, { note, instrument });
+  };
+
+  return (
+    <DefaultButton
+      // iconProps={{ iconName: "send" }}
+      onMouseDown={() => {
+        sendToServer("key_down");
+      }}
+      onMouseUp={() => {
+        sendToServer("key_up");
+      }}
+    >
+      {note}
+    </DefaultButton>
+  );
+};
