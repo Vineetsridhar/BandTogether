@@ -44,11 +44,9 @@ export const Buttons = () => {
         <DefaultButton
           // iconProps={{ iconName: "send" }}
           onMouseDown={() => {
-            console.log(TONE + OCTAVE + " down");
             sendKeyDown(TONE + OCTAVE);
           }}
           onMouseUp={() => {
-            console.log(TONE + OCTAVE + " up");
             sendKeyUp(TONE + OCTAVE);
           }}
         >
