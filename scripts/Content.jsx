@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "./Socket";
 import AudioPlayer from "./AudioPlayer";
+import { Buttons } from "./Buttons";
 
 const audioPlayer = AudioPlayer();
 
@@ -21,29 +22,9 @@ export function Content() {
     });
   }, []);
 
-  const onClick = (note) => {
-    playSound(note);
-    socket.emit("key_down", { note, instrument });
-  };
-
-  const getAllButton = () => {
-    let buttons = [];
-    OCTAVE_NUMBERS.forEach((OCTAVE) => {
-      TONES.forEach((TONE) => {
-        const note = TONE + OCTAVE;
-        buttons.push(
-          <button
-            onClick={() => {
-              onClick(note);
-            }}
-          >
-            {note}
-          </button>
-        );
-      });
-    });
-    return buttons;
-  };
-
-  return <div>{getAllButton()}</div>;
+  return (
+    <div>
+      <Buttons />
+    </div>
+  );
 }

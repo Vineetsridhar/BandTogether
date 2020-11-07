@@ -22,19 +22,28 @@ def key_down(key_data):
     socketio.emit(
         "key_down",
         {"note": key_data["note"], "instrument": key_data["instrument"]},
-        include_self=False
+        include_self=False,
     )
 
 
-@app.route('/')
+@socketio.on("connect")
+def connect():
+    print("Conected")
+    socketio.emit(
+        "key_down",
+        {"note": "aa", "instrument": "instrument"},
+    )
+
+
+@app.route("/")
 def hello():
-    return flask.render_template('index.html')
+    return flask.render_template("index.html")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     socketio.run(
         app,
-        host=os.getenv('IP', '0.0.0.0'),
-        port=int(os.getenv('PORT', 8080)),
-        debug=True
+        host=os.getenv("IP", "0.0.0.0"),
+        port=int(os.getenv("PORT", 8080)),
+        debug=True,
     )
