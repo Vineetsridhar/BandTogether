@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { socket } from "./Socket";
 import { Buttons } from "./Buttons";
 import AudioPlayer from "./AudioPlayer";
+import { Stack } from "office-ui-fabric-react";
 
 const audioPlayers = {};
 
@@ -40,7 +41,9 @@ export function Content() {
   };
 
   return (
-    <div>
+    <Stack horizontalAlign="space-between" align="center">
+      <h1 align="center">Band Together</h1>
+      <h3 align="center">Play some music together!</h3>
       <ul>
         {instruments.map((i) => (
           <li
@@ -54,6 +57,6 @@ export function Content() {
         ))}
       </ul>
       <Buttons playSound={playSound} instrument={instrument} />
-    </div>
+    </Stack>
   );
 }
