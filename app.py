@@ -8,35 +8,30 @@ socketio.init_app(app, cors_allowed_origins="*")
 
 items = []
 
+
 @socketio.on("key_up")
 def key_up(key_data):
-    print("Key up")
     socketio.emit(
         "key_up",
         {"note": key_data["note"], "instrument": key_data["instrument"]},
     )
 
+
 @socketio.on("key_down")
 def key_down(key_data):
-    print("Key down")
     socketio.emit(
         "key_down",
         {"note": key_data["note"], "instrument": key_data["instrument"]},
+        include_self=False
     )
 
-@socketio.on('connect')
-def connect():
-    print("Conected")
-    socketio.emit(
-        "key_down",
-        {"note": "aa", "instrument": "instrument"},
-    )
 
 @app.route('/')
 def hello():
     return flask.render_template('index.html')
 
-if __name__ == '__main__': 
+
+if __name__ == '__main__':
     socketio.run(
         app,
         host=os.getenv('IP', '0.0.0.0'),
