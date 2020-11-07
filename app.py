@@ -1,6 +1,5 @@
 import flask, os
-from flask_sqlalchemy import SQLAlchemy
-from flask_socketio import SocketIO, join_room, leave_room, emit, rooms as r
+from flask_socketio import SocketIO, emit
 
 app = flask.Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
