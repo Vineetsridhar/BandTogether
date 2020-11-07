@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { socket } from "./Socket";
 import AudioPlayer from "./AudioPlayer";
 import { Stack, TextField, DefaultButton } from "office-ui-fabric-react";
+import { CustomButton } from "./CustomButton";
 
 const TONES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const OCTAVE_NUMBERS = [1];
@@ -26,34 +27,18 @@ export const Buttons = () => {
 
   const playSound = (note) => {
     console.log(note);
+    console.log("skjdfnsdkj");
     audioPlayer.playNote(note);
-  };
-
-  const sendKeyDown = (note, instrument = "piano") => {
-    playSound(note);
-    socket.emit("key_down", { note, instrument });
-  };
-
-  const sendKeyUp = (note, instrument = "piano") => {
-    socket.emit("key_up", { note, instrument });
   };
 
   const getAllButton = () => {
     return OCTAVE_NUMBERS.map((OCTAVE) =>
       TONES.map((TONE) => (
-        <DefaultButton
-          // iconProps={{ iconName: "send" }}
-          onMouseDown={() => {
-            console.log(TONE + OCTAVE + " down");
-            sendKeyDown(TONE + OCTAVE);
-          }}
-          onMouseUp={() => {
-            console.log(TONE + OCTAVE + " up");
-            sendKeyUp(TONE + OCTAVE);
-          }}
-        >
-          {TONE + OCTAVE}
-        </DefaultButton>
+        <CustomButton
+          note={TONE + OCTAVE}
+          instrument={instrument}
+          playSound={playSound}
+        />
       ))
     ).flat();
   };
