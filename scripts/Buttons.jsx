@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CustomButton } from "./CustomButton";
 
 const TONES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-const OCTAVE_NUMBERS = [4];
+const OCTAVE_NUMBERS = [4, 5];
 
 export const Buttons = ({ playSound, instrument }) => {
   const getAllButton = () => {

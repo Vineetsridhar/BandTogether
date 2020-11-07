@@ -5,6 +5,16 @@ import AudioPlayer from "./AudioPlayer";
 
 const audioPlayers = {};
 
+const instruments = [
+  "accordion",
+  "acoustic_grand_piano",
+  "acoustic_guitar_nylon",
+  "helicopter",
+  "lead_6_voice",
+  "steel_drums",
+  "xylophone",
+];
+
 export function Content() {
   const [instrument, setInstrument] = useState("acoustic_grand_piano");
 
@@ -19,12 +29,31 @@ export function Content() {
     });
   }, []);
 
-  const playSound = (note, instrument = instrument) => {
-    if (!audioPlayers.hasOwnProperty(instrument)) {
-      audioPlayers[instrument] = AudioPlayer();
+  const playSound = (note, ins) => {
+    ins = ins ? ins : instrument;
+    if (!audioPlayers.hasOwnProperty(ins)) {
+      audioPlayers[ins] = AudioPlayer();
+      audioPlayers[ins].setInstrument(instrument);
     }
-    audioPlayers[instrument].playNote(note);
+    audioPlayers[ins].playNote(note);
+    console.log(audioPlayers, ins);
   };
 
-  return <Buttons playSound={playSound} instrument={instrument} />;
+  return (
+    <div>
+      <ul>
+        {instruments.map((i) => (
+          <li
+            onClick={() => {
+              setInstrument(i);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            {i}
+          </li>
+        ))}
+      </ul>
+      <Buttons playSound={playSound} instrument={instrument} />
+    </div>
+  );
 }

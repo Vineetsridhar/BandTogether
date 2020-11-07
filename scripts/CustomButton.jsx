@@ -5,7 +5,6 @@ import { Stack, TextField, DefaultButton } from "office-ui-fabric-react";
 
 export const CustomButton = ({ note, instrument, playSound }) => {
   const sendToServer = (event) => {
-    playSound(note);
     socket.emit(event, { note, instrument });
   };
 
@@ -14,6 +13,7 @@ export const CustomButton = ({ note, instrument, playSound }) => {
       // iconProps={{ iconName: "send" }}
       onMouseDown={() => {
         sendToServer("key_down");
+        playSound(note);
       }}
       onMouseUp={() => {
         sendToServer("key_up");
