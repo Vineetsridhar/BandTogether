@@ -4,6 +4,7 @@ import { Buttons } from "./Buttons";
 import AudioPlayer from "./AudioPlayer";
 import { Stack } from "office-ui-fabric-react";
 import { SheetMusic } from "./SheetMusic";
+import Images from "./images";
 
 const audioPlayers = {};
 
@@ -11,17 +12,15 @@ const instruments = [
   "accordion",
   "acoustic_grand_piano",
   "acoustic_guitar_nylon",
-  "helicopter",
-  "lead_6_voice",
   "steel_drums",
-  "xylophone",
+  "alto_sax",
+  "synth_drum",
 ];
 
 export function Content() {
   const [instrument, setInstrument] = useState("acoustic_grand_piano");
   const [name, setName] = useState("Random");
   const [users, setUsers] = useState({});
-  const [sid, setSID] = useState("");
 
   useEffect(() => {
     audioPlayers[instrument] = AudioPlayer();
@@ -69,18 +68,21 @@ export function Content() {
           {user["name"]} - {user["instrument"]}
         </p>
       ))}
-      <ul>
+      <div className="imageContainer">
         {instruments.map((i) => (
-          <li
-            onClick={() => {
-              setInstrument(i);
-            }}
-            style={{ cursor: "pointer" }}
-          >
+          <span style={{ flexDirection: "column", display: "flex", flex: 1 }}>
+            <img
+              className={"image " + (i == instrument ? "selected" : "")}
+              src={Images[i]}
+              onClick={() => {
+                setInstrument(i);
+              }}
+              style={{ cursor: "pointer" }}
+            />
             {i}
-          </li>
+          </span>
         ))}
-      </ul>
+      </div>
       <SheetMusic />
       <Buttons playSound={playSound} instrument={instrument} name={name} />
     </Stack>

@@ -2,6 +2,23 @@ body {
   background-color: coral;
 }
 
+.image {
+  object-fit: contain;
+  flex: 1;
+  height: 50px;
+}
+
+.selected {
+  background-color: aliceblue;
+}
+
+.imageContainer {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
 .slideOutDown {
   animation-name: slideOutDown;
   animation-duration: 4s;
