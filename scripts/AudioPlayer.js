@@ -1,14 +1,19 @@
 import SoundFontPlayer from "soundfont-player";
 import AudioContext from "./AudioContext";
 
+/*
+ * https://dev.to/ganeshmani/building-a-piano-with-react-hooks-3mih
+ * Used this link to create the Sound player boilder plate code
+ */
+
 const NullSoundFontPlayerNoteAudio = {
-  stop() {}
+  stop() {},
 };
 
 const NullSoundFontPlayer = {
   play() {
     return NullSoundFontPlayerNoteAudio;
-  }
+  },
 };
 const AudioPlayer = () => {
   //Audio Context
@@ -20,16 +25,16 @@ const AudioPlayer = () => {
   const Player = {
     setInstrument(instrumentName) {
       SoundFontPlayer.instrument(audioContext, instrumentName)
-        .then(soundfontPlayer => {
+        .then((soundfontPlayer) => {
           soundPlayer = soundfontPlayer;
         })
-        .catch(e => {
+        .catch((e) => {
           soundPlayer = NullSoundFontPlayer;
         });
     },
     playNote(note) {
       soundPlayer.play(note);
-    }
+    },
   };
   return Player;
 };
