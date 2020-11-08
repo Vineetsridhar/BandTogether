@@ -51,9 +51,7 @@ export function Content() {
             updateUpcomingNotes(newNoteToBePlayed);
           }
       if (noteToBePlayed[0].note.split(" ")[1] == note) {
-       
         console.log(timeFromStart, noteTime);
-        
         const timeDelta = Math.abs(timeFromStart - noteTime);
         if (timeDelta <= 1.2) {
           setScore(score + 5);
