@@ -50,7 +50,10 @@ def key_down(key_data):
 def key_down():
     socketio.emit(
         "upcoming_note",
-        [{"note": "piano H", "delay": "0s"}, {"note": "piano G", "delay": "4s"}],
+        [ { "note": "Piano C4", "delay": "0s" },
+          { "note": "Piano C#4", "delay": "5s" },
+          { "note": "Piano D4", "delay": "10s" },
+          { "note": "Piano F4", "delay": "15s" },],
     )
 
 
