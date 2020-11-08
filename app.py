@@ -1,4 +1,5 @@
 import os
+import logging
 import flask
 import flask_socketio
 import threading
@@ -7,6 +8,8 @@ import time
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 socketio.init_app(app, cors_allowed_origins="*")
+logging.getLogger("werkzeug").setLevel(logging.ERROR)
+
 
 items = []
 
@@ -24,6 +27,7 @@ def key_up(key_data):
 
 @socketio.on("key_down")
 def key_down(key_data):
+    print(key_data)
     if key_data["name"] not in users:
         users[flask.request.sid] = {
             "name": key_data["name"],

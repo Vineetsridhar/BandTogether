@@ -24,34 +24,8 @@ export const Buttons = ({ playSound, instrument, name }) => {
     ).flat();
   };
 
-  const firstNote = MidiNumbers.fromNote("c4");
-  const lastNote = MidiNumbers.fromNote("c5");
-  const keyboardShortcuts = KeyboardShortcuts.create({
-    firstNote: firstNote,
-    lastNote: lastNote,
-    keyboardConfig: KeyboardShortcuts.HOME_ROW,
-  });
-
   return (
     <>
-      <Piano
-        noteRange={{ first: firstNote, last: lastNote }}
-        playNote={(midiNumber) => {
-          // console.log(midiNumber);
-        }}
-        stopNote={(midiNumber, n) => {
-          // Stop playing a given note - see notes below
-        }}
-        width={300}
-        keyboardShortcuts={keyboardShortcuts}
-        onPlayNoteInput={(note) => {
-          playSound(note);
-          sendToServer("key_down", note);
-        }}
-        onStopNoteInput={(blah) => {
-          // console.log("stop", blah);
-        }}
-      />
       <Stack horizontal wrap horizontalAlign="space-between" align="center">
         {getAllButton()}
       </Stack>
