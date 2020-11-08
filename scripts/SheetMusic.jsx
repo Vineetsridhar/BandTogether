@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { socket } from "./Socket";
 import { Buttons } from "./Buttons";
 import AudioPlayer from "./AudioPlayer";
-import { DefaultButton, Stack } from "office-ui-fabric-react";
+import {
+  DefaultButton,
+  FontIcon,
+  IconButton,
+  ImageIcon,
+  Stack,
+} from "office-ui-fabric-react";
 import { Animated } from "react-animated-css";
 
 let music = [];
@@ -34,16 +40,15 @@ export function SheetMusic() {
  
   return (
     <>
-      <DefaultButton
-        iconProps={{ iconName: "Refresh" }}
-        onClick={() => {
-          socket.emit("restart_upcoming");
-        }}
-      ></DefaultButton>
-      <div style={{ height: "200px" }}>
+      <div
+        style={{ border: "4px solid #0063B1", height: "200px", width: "50vw" }}
+      >
         {upcomingNotes.map((note) => (
-          <div style={{ position: "absolute" }}>
-            <p className="slideOutDown" fstyle={{ animationDelay: note.delay }}>
+          <div style={{ position: "absolute", width: "50vw" }}>
+            <p
+              className="slideOutDown"
+              style={{ animationDelay: note.delay, textAlign: "center" }}
+            >
               {note.note}
             </p>
           </div>
@@ -51,12 +56,22 @@ export function SheetMusic() {
         <div
           style={{
             position: "absolute",
-            background: "black",
-            width: "75%",
+            background: "#0063B1",
+            width: "50vw",
             height: "50px",
           }}
         >
-          <p style={{ color: "lightblue" }}>Upcoming notes</p>
+          <p style={{ color: "lightblue" }}>
+            Upcoming notes{" "}
+            <DefaultButton
+              onClick={() => {
+                socket.emit("restart_upcoming");
+              }}
+            >
+              <FontIcon iconName="Refresh"></FontIcon>
+              <p>Restart Song</p>
+            </DefaultButton>
+          </p>
         </div>
       </div>
     </>
