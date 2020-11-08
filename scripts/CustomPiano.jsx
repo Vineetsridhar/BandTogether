@@ -11,13 +11,14 @@ export const CustomPiano = ({ playSound, instrument, name }) => {
   };
 
   const firstNote = MidiNumbers.fromNote("c4");
-  const lastNote = MidiNumbers.fromNote("c5");
+  const lastNote = MidiNumbers.fromNote("b4");
   const keyboardShortcuts = KeyboardShortcuts.create({
     firstNote: firstNote,
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
-
+  const translate = {60:"C4", 61:"C#4", 62:"D4", 63:"D#4", 64:"E4", 65:"F4",
+                     66:"F#4", 67:"G4",68:"G#4",69:"A4",70:"A#4",71:"B5"};
   return (
     <div style={{ height: "200px" }}>
       <Piano
@@ -32,8 +33,8 @@ export const CustomPiano = ({ playSound, instrument, name }) => {
         // height={"100%"}
         keyboardShortcuts={keyboardShortcuts}
         onPlayNoteInput={(note) => {
-          playSound(note);
-          sendToServer("key_down", note);
+          playSound(translate[note]);
+          sendToServer("key_down", translate[note]);
           // checkNote(note);
         }}
         onStopNoteInput={(blah) => {
