@@ -37,15 +37,17 @@ export function Content() {
     const timeFromStart = (Date.now() - startTime) / 1000;
     ins = ins ? ins : instrument;
     if (noteToBePlayed !== undefined && noteToBePlayed.length != 0) {
-      if (noteToBePlayed[0].note.split(" ")[1] == note) {
-        const noteTime =
+      const noteTime =
           parseInt(
             noteToBePlayed[0].delay.substr(
               0,
               noteToBePlayed[0].delay.length - 1
             )
           ) + 5;
+      if (noteToBePlayed[0].note.split(" ")[1] == note) {
+        
         console.log(timeFromStart, noteTime);
+        
         const timeDelta = Math.abs(timeFromStart - noteTime);
         if (timeDelta <= 1.2) {
           setScore(score + 5);
@@ -58,9 +60,13 @@ export function Content() {
         newNoteToBePlayed.shift();
         updateUpcomingNotes(newNoteToBePlayed);
       }
+      if(timeFromStart > noteTime) {
+        const newNoteToBePlayed = noteToBePlayed;
+        newNoteToBePlayed.shift();
+        updateUpcomingNotes(newNoteToBePlayed);
+      }
     }
     console.log(noteToBePlayed);
-
     if (!audioPlayers.hasOwnProperty(ins)) {
       audioPlayers[ins] = AudioPlayer();
       audioPlayers[ins].setInstrument(instrument);
