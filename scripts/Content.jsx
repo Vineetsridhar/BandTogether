@@ -36,6 +36,7 @@ export function Content() {
     console.log(noteToBePlayed);
     const timeFromStart = (Date.now() - startTime) / 1000;
     ins = ins ? ins : instrument;
+    
     if (noteToBePlayed !== undefined && noteToBePlayed.length != 0) {
       const noteTime =
           parseInt(
@@ -44,8 +45,13 @@ export function Content() {
               noteToBePlayed[0].delay.length - 1
             )
           ) + 5;
+        if(timeFromStart > noteTime) {
+            const newNoteToBePlayed = noteToBePlayed;
+            newNoteToBePlayed.shift();
+            updateUpcomingNotes(newNoteToBePlayed);
+          }
       if (noteToBePlayed[0].note.split(" ")[1] == note) {
-        
+       
         console.log(timeFromStart, noteTime);
         
         const timeDelta = Math.abs(timeFromStart - noteTime);
@@ -60,11 +66,7 @@ export function Content() {
         newNoteToBePlayed.shift();
         updateUpcomingNotes(newNoteToBePlayed);
       }
-      if(timeFromStart > noteTime) {
-        const newNoteToBePlayed = noteToBePlayed;
-        newNoteToBePlayed.shift();
-        updateUpcomingNotes(newNoteToBePlayed);
-      }
+      
     }
     console.log(noteToBePlayed);
     if (!audioPlayers.hasOwnProperty(ins)) {
