@@ -79,7 +79,7 @@ export function Content() {
               }}
               style={{ cursor: "pointer" }}
             />
-            {i}
+            <p style={{ textAlign: "center" }}>{i}</p>
           </span>
         ))}
       </div>
