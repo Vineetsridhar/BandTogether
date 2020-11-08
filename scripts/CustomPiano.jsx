@@ -32,7 +32,7 @@ export const CustomPiano = ({ playSound, instrument, name }) => {
         // height={"100%"}
         keyboardShortcuts={keyboardShortcuts}
         onPlayNoteInput={(note) => {
-          playSound(note);
+          playSound("c4");
           sendToServer("key_down", note);
           // checkNote(note);
         }}

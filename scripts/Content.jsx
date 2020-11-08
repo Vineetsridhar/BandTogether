@@ -7,11 +7,12 @@ import { SheetMusic } from "./SheetMusic";
 import Images from "./images";
 import { CustomPiano } from "./CustomPiano";
 import { adjectives, animals } from "./names";
+import { CustomDrums } from "./CustomDrums";
 
 const audioPlayers = {};
 
 export function Content() {
-  const [instrument, setInstrument] = useState("acoustic_grand_piano");
+  const [instrument, setInstrument] = useState("steel_drums");
   const [name, setName] = useState("Name");
   const [users, setUsers] = useState({});
   const [score, setScore] = useState(0);
@@ -95,7 +96,13 @@ export function Content() {
     },
     steel_drums: {
       name: "Steel Drums",
-      ui: <Buttons playSound={playSound} instrument={instrument} name={name} />,
+      ui: (
+        <CustomDrums
+          playSound={playSound}
+          instrument={instrument}
+          name={name}
+        />
+      ),
       image:
         "https://www.clker.com/cliparts/5/c/d/3/15163052441523204714clipart-steel-drum.med.png",
     },
@@ -107,7 +114,13 @@ export function Content() {
     },
     synth_drum: {
       name: "Synth Drums",
-      ui: <Buttons playSound={playSound} instrument={instrument} name={name} />,
+      ui: (
+        <CustomDrums
+          playSound={playSound}
+          instrument={instrument}
+          name={name}
+        />
+      ),
       image:
         "https://i.pinimg.com/564x/32/96/56/329656ec2dc1166cbc8dd92e421665c2.jpg",
     },
@@ -225,7 +238,7 @@ export function Content() {
         </div>
       </Stack.Item>
       <Stack.Item align="center" styles={stackItemStyles}>
-        <div style={{ width: "50vw" }}>{instruments[instrument].ui}</div>
+        <div style={{ width: "75vw" }}>{instruments[instrument].ui}</div>
       </Stack.Item>
     </Stack>
   );
