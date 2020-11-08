@@ -3,6 +3,7 @@ import { CustomButton } from "./CustomButton";
 import { Stack } from "office-ui-fabric-react";
 import { Piano, KeyboardShortcuts, MidiNumbers } from "react-piano";
 import { socket } from "./Socket";
+import {checkNote} from "./SheetMusic";
 
 export const CustomPiano = ({ playSound, instrument, name }) => {
   const sendToServer = (event, note) => {
@@ -33,6 +34,7 @@ export const CustomPiano = ({ playSound, instrument, name }) => {
         onPlayNoteInput={(note) => {
           playSound(note);
           sendToServer("key_down", note);
+          checkNote(note);
         }}
         onStopNoteInput={(blah) => {
           // console.log("stop", blah);
