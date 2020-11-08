@@ -14,8 +14,52 @@ export function Content() {
   const [instrument, setInstrument] = useState("acoustic_grand_piano");
   const [name, setName] = useState("Name");
   const [users, setUsers] = useState({});
+  const [score, setScore] = useState(0);
+  const [noteToBePlayed, setNoteToBePlayed] = useState([
+    { note: "Piano H", delay: "0s" },
+    { note: "Piano G", delay: "5s" },
+    { note: "Piano A", delay: "10s" },
+    { note: "Piano B", delay: "15s" },
+  ]);
+  const [upcomingNotes, updateUpcomingNotes] = useState([
+    { note: "Piano H", delay: "0s" },
+    { note: "Piano G", delay: "5s" },
+    { note: "Piano A", delay: "10s" },
+    { note: "Piano B", delay: "15s" },
+  ]);
+
   const playSound = (note, ins) => {
     ins = ins ? ins : instrument;
+    console.log(note);
+    let painoMap = new Map([
+      ["A", 60],
+      ["W", 61],
+      ["S", 62],
+      ["E", 63],
+      ["D", 64],
+      ["F", 65],
+      ["T", 66],
+      ["G", 67],
+      ["Y", 68],
+      ["H", 69],
+      ["U", 70],
+      ["J", 71],
+      ["K", 72],
+    ]);
+    console.log(noteToBePlayed);
+    if (noteToBePlayed !== undefined && noteToBePlayed.length != 0) {
+      if (
+        painoMap.get(
+          noteToBePlayed[0].note.substr(noteToBePlayed[0].note.length - 1)
+        ) == note
+      ) {
+        setScore(score + 5);
+        const newNoteToBePlayed = noteToBePlayed;
+        newNoteToBePlayed.shift();
+        updateUpcomingNotes(newNoteToBePlayed);
+      }
+    }
+    console.log(score);
 
     if (!audioPlayers.hasOwnProperty(ins)) {
       audioPlayers[ins] = AudioPlayer();
@@ -90,6 +134,15 @@ export function Content() {
 
     socket.on("all_users", (data) => {
       setUsers(data);
+    });
+
+    socket.on("upcoming_note", (data) => {
+      setScore(0);
+      updateUpcomingNotes([]);
+      setTimeout(() => {
+        updateUpcomingNotes(data);
+        setNoteToBePlayed(data);
+      }, 100);
     });
   }, []);
 
@@ -168,7 +221,7 @@ export function Content() {
       </Stack.Item>
       <Stack.Item align="center" styles={stackItemStyles}>
         <div style={{ width: "50vw" }}>
-          <SheetMusic />
+          <SheetMusic upcomingNotes={upcomingNotes} score={score} />
         </div>
       </Stack.Item>
       <Stack.Item align="center" styles={stackItemStyles}>
