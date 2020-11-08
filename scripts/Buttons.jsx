@@ -7,9 +7,9 @@ import { socket } from "./Socket";
 const TONES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const OCTAVE_NUMBERS = [4, 5];
 
-export const Buttons = ({ playSound, instrument }) => {
+export const Buttons = ({ playSound, instrument, name }) => {
   const sendToServer = (event, note) => {
-    socket.emit(event, { note, instrument });
+    socket.emit(event, { note, instrument, name });
   };
   const getAllButton = () => {
     return OCTAVE_NUMBERS.map((OCTAVE) =>
@@ -18,6 +18,7 @@ export const Buttons = ({ playSound, instrument }) => {
           note={TONE + OCTAVE}
           instrument={instrument}
           playSound={playSound}
+          name={name}
         />
       ))
     ).flat();
