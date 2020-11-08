@@ -30,10 +30,6 @@ export function Content() {
 
   const playSound = (note, ins) => {
     ins = ins ? ins : instrument;
-    console.log(note);
-    
-    console.log(noteToBePlayed);
-    console.log(noteToBePlayed[0].note.split(" ")[1]);
     if (noteToBePlayed !== undefined && noteToBePlayed.length != 0) {
       if (
         noteToBePlayed[0].note.split(" ")[1] == note
@@ -43,9 +39,14 @@ export function Content() {
         newNoteToBePlayed.shift();
         updateUpcomingNotes(newNoteToBePlayed);
       }
+      // setTimeout(() => {
+      //   const newNoteToBePlayed = noteToBePlayed;
+      //   newNoteToBePlayed.shift();
+      //   updateUpcomingNotes(newNoteToBePlayed);
+      //   }, 5000);
     }
-    // console.log(score);
-
+    console.log(noteToBePlayed);
+    
     if (!audioPlayers.hasOwnProperty(ins)) {
       audioPlayers[ins] = AudioPlayer();
       audioPlayers[ins].setInstrument(instrument);
