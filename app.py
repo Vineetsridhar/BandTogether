@@ -1,6 +1,8 @@
 import os
 import flask
 import flask_socketio
+import threading
+import time
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
@@ -23,6 +25,14 @@ def key_down(key_data):
         "key_down",
         {"note": key_data["note"], "instrument": key_data["instrument"]},
         include_self=False,
+    )
+
+
+@socketio.on("restart_upcoming")
+def key_down():
+    socketio.emit(
+        "upcoming_note",
+        [{"note": "piano C", "delay": "0s"}, {"note": "piano G", "delay": "4s"}],
     )
 
 

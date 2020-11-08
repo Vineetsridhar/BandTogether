@@ -1,3 +1,25 @@
 body {
   background-color: coral;
 }
+
+.slideOutDown {
+  animation-name: slideOutDown;
+  animation-duration: 4s;
+}
+
+@keyframes slideOutDown {
+  0% {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+  99% {
+    transform: translate3d(0, 180px, 0);
+    opacity: 1;
+  }
+
+  100% {
+    visibility: hidden;
+    display: none;
+    opacity: 0;
+  }
+}
