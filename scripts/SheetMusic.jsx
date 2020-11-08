@@ -16,23 +16,6 @@ import { getResponsiveMode } from "office-ui-fabric-react/lib/utilities/decorato
 let music = [];
 
 export function SheetMusic({ upcomingNotes, score }) {
-  // useEffect(() => {
-  //   socket.on("upcoming_note", (data) => {
-  //     updateUpcomingNotes([]);
-  //     setTimeout(() => {
-  //       updateUpcomingNotes(data);
-  //     }, 100);
-  //   });
-  //   upcomingNotes.forEach((note) => {
-  //     console.log(note);
-  //     setTimeout(() => {
-  //       console.log(music);
-  //       // music.push(note);
-  //     }, note.delay.substr(0, note.delay.length - 1));
-  //   });
-  // }, []);
-  // console.log(upcomingNotes);
-
   return (
     <>
       <div
@@ -50,7 +33,11 @@ export function SheetMusic({ upcomingNotes, score }) {
               <div style={{ position: "absolute", width: "50vw" }}>
                 <p
                   className="slideOutDown"
-                  style={{ animationDelay: note.delay, textAlign: "center" }}
+                  style={{
+                    animationDelay: note.delay,
+                    position: "absolute",
+                    left: note.pos,
+                  }}
                 >
                   {note.note}
                 </p>

@@ -15,6 +15,38 @@ items = []
 
 users = {}
 
+instruments = ["accordion",  "acoustic_grand_piano", "acoustic_guitar_nylon", "steel_drums", "alto_sax", "synth_drum"]
+
+song = [{ "note": "E4", "delay": "0s", "instrument":instruments  },
+    { "note": "E4", "delay": "0.5s", "instrument":instruments },
+    { "note": "F4", "delay": "1.0s", "instrument":instruments },
+    { "note": "G4", "delay": "1.5s", "instrument":instruments },
+    { "note": "G4", "delay": "2.0s", "instrument":instruments },
+    { "note": "F4", "delay": "2.5s", "instrument":instruments },
+    { "note": "E4", "delay": "3.0s", "instrument":instruments },
+    { "note": "D4", "delay": "3.5s", "instrument":instruments },
+    { "note": "C4", "delay": "4.0s", "instrument":instruments },
+    { "note": "C4", "delay": "4.5s", "instrument":instruments },
+    { "note": "D4", "delay": "5.0s", "instrument":instruments },
+    { "note": "E4", "delay": "5.5s", "instrument":instruments },
+    { "note": "E4", "delay": "6.0s", "instrument":instruments },
+    { "note": "D4", "delay": "6.5s", "instrument":instruments },
+    { "note": "D4", "delay": "7.0s", "instrument":instruments },
+
+    { "note": "C4", "delay": "0s", "instrument":["acoustic_bass"] },
+    { "note": "D4", "delay": "0s", "instrument":["acoustic_bass"] },
+    { "note": "E4", "delay": "0s", "instrument":["acoustic_bass"] },
+
+    { "note": "C4", "delay": "3s", "instrument":["acoustic_bass"] },
+    { "note": "D4", "delay": "3s", "instrument":["acoustic_bass"] },
+    { "note": "E4", "delay": "3s", "instrument":["acoustic_bass"] },
+
+    { "note": "C4", "delay": "6s", "instrument":["acoustic_bass"] },
+    { "note": "D4", "delay": "6s", "instrument":["acoustic_bass"] },
+    { "note": "E4", "delay": "6s", "instrument":["acoustic_bass"] },
+
+
+    ],
 
 @socketio.on("key_up")
 def key_up(key_data):
@@ -50,19 +82,7 @@ def key_down(key_data):
 def key_down():
     socketio.emit(
         "upcoming_note",
-        [ { "note": "Piano C4", "delay": "0s" },
-          { "note": "Piano C#4", "delay": "5s" },
-          { "note": "Piano D4", "delay": "10s" },
-          { "note": "Piano F4", "delay": "15s" },],
-    )
-
-
-@socketio.on("connect")
-def connect():
-    print("Conected")
-    socketio.emit(
-        "key_down",
-        {"note": "aa", "instrument": "instrument"},
+        song
     )
 
 
@@ -70,6 +90,10 @@ def connect():
 def disconnect():
     del users[flask.request.sid]
 
+
+@app.route('/get_music')
+def get_music():
+    return song
 
 @app.route("/")
 def hello():
