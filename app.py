@@ -34,16 +34,16 @@ song = [{ "note": "E4", "delay": "0s", "instrument":instruments  },
     { "note": "D4", "delay": "7.0s", "instrument":instruments },
 
     { "note": "C4", "delay": "0s", "instrument":["acoustic_bass"] },
-    { "note": "D4", "delay": "0s", "instrument":["acoustic_bass"] },
     { "note": "E4", "delay": "0s", "instrument":["acoustic_bass"] },
+    { "note": "G4", "delay": "0s", "instrument":["acoustic_bass"] },
 
     { "note": "C4", "delay": "3s", "instrument":["acoustic_bass"] },
-    { "note": "D4", "delay": "3s", "instrument":["acoustic_bass"] },
     { "note": "E4", "delay": "3s", "instrument":["acoustic_bass"] },
+    { "note": "G4", "delay": "3s", "instrument":["acoustic_bass"] },
 
     { "note": "C4", "delay": "6s", "instrument":["acoustic_bass"] },
-    { "note": "D4", "delay": "6s", "instrument":["acoustic_bass"] },
     { "note": "E4", "delay": "6s", "instrument":["acoustic_bass"] },
+    { "note": "G4", "delay": "6s", "instrument":["acoustic_bass"] },
 
 
     ],
