@@ -30,6 +30,8 @@ export function Content() {
     ins = ins ? ins : instrument;
 
     if (noteToBePlayed !== undefined && noteToBePlayed.length != 0) {
+      console.log(noteToBePlayed);
+      console.log(noteToBePlayed[0].note)
       const noteTime =
         parseInt(
           noteToBePlayed[0].delay.substr(0, noteToBePlayed[0].delay.length - 1)
@@ -39,7 +41,7 @@ export function Content() {
         newNoteToBePlayed.shift();
         updateUpcomingNotes(newNoteToBePlayed);
       }
-      if (noteToBePlayed[0].note.split(" ")[1] == note) {
+      if (noteToBePlayed[0].note == note) {
         console.log(timeFromStart, noteTime);
         const timeDelta = Math.abs(timeFromStart - noteTime);
         if (timeDelta <= 1.2) {
