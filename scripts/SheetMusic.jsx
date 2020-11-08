@@ -5,23 +5,33 @@ import AudioPlayer from "./AudioPlayer";
 import { DefaultButton, Stack } from "office-ui-fabric-react";
 import { Animated } from "react-animated-css";
 
+let music = [];
+
 export function SheetMusic() {
   const [upcomingNotes, updateUpcomingNotes] = useState([
-    { note: "Piano C", delay: "0s" },
+    { note: "Piano A", delay: "0s" },
     { note: "Piano G", delay: "5s" },
   ]);
-  console.log("skjdfnsdkjnf");
-
+  music.push(upcomingNotes);
+  console.log(music);
   useEffect(() => {
     socket.on("upcoming_note", (data) => {
-      console.log(data);
       updateUpcomingNotes([]);
       setTimeout(() => {
         updateUpcomingNotes(data);
+        console.log(111);
       }, 100);
     });
+    upcomingNotes.forEach((note) => {
+      console.log(note);
+      setTimeout(()=>{
+        console.log(note);
+      }, note.delay.substr(0, note.delay.length-1));
+    });
+    
   }, []);
-  console.log(upcomingNotes);
+  // console.log(upcomingNotes);
+ 
   return (
     <>
       <DefaultButton
@@ -33,7 +43,7 @@ export function SheetMusic() {
       <div style={{ height: "200px" }}>
         {upcomingNotes.map((note) => (
           <div style={{ position: "absolute" }}>
-            <p className="slideOutDown" style={{ animationDelay: note.delay }}>
+            <p className="slideOutDown" fstyle={{ animationDelay: note.delay }}>
               {note.note}
             </p>
           </div>
@@ -51,4 +61,19 @@ export function SheetMusic() {
       </div>
     </>
   );
+}
+
+export function checkNote(note) {
+  // checkNote((note) => {
+  //   // socket.on("upcoming_note", (data) => {
+  //   //   updateUpcomingNotes([]);
+  //   //   setTimeout(() => {
+  //   //     updateUpcomingNotes(data);
+  //   //   }, 100);
+  //   // });
+  //   console.log(note);
+  // }, []);
+  console.log(note);
+  console.log(music);
+
 }
