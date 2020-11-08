@@ -3,9 +3,9 @@ import { socket } from "./Socket";
 import AudioPlayer from "./AudioPlayer";
 import { Stack, TextField, DefaultButton } from "office-ui-fabric-react";
 
-export const CustomButton = ({ note, instrument, playSound }) => {
+export const CustomButton = ({ note, instrument, playSound, name }) => {
   const sendToServer = (event) => {
-    socket.emit(event, { note, instrument });
+    socket.emit(event, { note, instrument, name });
   };
 
   return (
