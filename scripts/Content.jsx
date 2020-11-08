@@ -8,36 +8,28 @@ import Images from "./images";
 import { CustomPiano } from "./CustomPiano";
 import { adjectives, animals } from "./names";
 import { CustomDrums } from "./CustomDrums";
+import { CustomBass } from "./CustomBass";
 
 const audioPlayers = {};
-
+const getPosition = (note) => {
+  const notes = ["C", "D", "E", "F", "G", "A", "B"];
+  return notes.indexOf(note.charAt(0)) * (500 / 7);
+};
 export function Content() {
-  const [instrument, setInstrument] = useState("steel_drums");
+  const [instrument, setInstrument] = useState("acoustic_grand_piano");
   const [name, setName] = useState("Name");
   const [users, setUsers] = useState({});
   const [score, setScore] = useState(0);
   const [startTime, setStartTime] = useState(Date.now());
   const [pressedStatus, setPressedStatus] = useState("");
-  const [noteToBePlayed, setNoteToBePlayed] = useState([
-    { note: "Piano C4", delay: "0s" },
-    { note: "Piano C#4", delay: "5s" },
-    { note: "Piano D4", delay: "10s" },
-    { note: "Piano F4", delay: "15s" },
-  ]);
-  const [upcomingNotes, updateUpcomingNotes] = useState([
-    { note: "Piano C4", delay: "0s" },
-    { note: "Piano C#4", delay: "5s" },
-    { note: "Piano D4", delay: "10s" },
-    { note: "Piano F4", delay: "15s" },
-  ]);
+  const [noteToBePlayed, setNoteToBePlayed] = useState([]);
+  const [upcomingNotes, updateUpcomingNotes] = useState([]);
 
   const playSound = (note, ins) => {
-    console.log(upcomingNotes);
-    console.log(noteToBePlayed);
     const timeFromStart = (Date.now() - startTime) / 1000;
     ins = ins ? ins : instrument;
     if (noteToBePlayed !== undefined && noteToBePlayed.length != 0) {
-      if (noteToBePlayed[0].note.split(" ")[1] == note) {
+      if (noteToBePlayed[0].note == note) {
         const noteTime =
           parseInt(
             noteToBePlayed[0].delay.substr(
@@ -45,7 +37,6 @@ export function Content() {
               noteToBePlayed[0].delay.length - 1
             )
           ) + 5;
-        console.log(timeFromStart, noteTime);
         const timeDelta = Math.abs(timeFromStart - noteTime);
         if (timeDelta <= 1.2) {
           setScore(score + 5);
@@ -59,7 +50,6 @@ export function Content() {
         updateUpcomingNotes(newNoteToBePlayed);
       }
     }
-    console.log(noteToBePlayed);
 
     if (!audioPlayers.hasOwnProperty(ins)) {
       audioPlayers[ins] = AudioPlayer();
@@ -123,6 +113,14 @@ export function Content() {
       image:
         "https://i.pinimg.com/564x/32/96/56/329656ec2dc1166cbc8dd92e421665c2.jpg",
     },
+    acoustic_bass: {
+      name: "Acoustic Bass",
+      ui: (
+        <CustomBass playSound={playSound} instrument={instrument} name={name} />
+      ),
+      image:
+        "https://www.ibanez.com/common/product_artist_file/file/ps_main_ag_acoustic_bass_en.png",
+    },
   };
 
   useEffect(() => {
@@ -132,10 +130,6 @@ export function Content() {
       adjectives[Math.floor(Math.random() * adjectives.length)];
     const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
     setName(`${randomAdjective} ${randomAnimal}`);
-
-    socket.on("key_up", (data) => {
-      console.log(data);
-    });
 
     socket.on("key_down", (data) => {
       playSound(data["note"], data["instrument"]);
@@ -149,7 +143,17 @@ export function Content() {
     });
 
     socket.on("upcoming_note", (data) => {
+      let instrument;
       setScore(0);
+      //LOL
+      setInstrument((ins) => {
+        instrument = ins;
+        return ins;
+      });
+      data = data.filter((item) => item.instrument.includes(instrument));
+      data.forEach((item) => {
+        item["pos"] = getPosition(item["note"]);
+      });
       updateUpcomingNotes([]);
       setTimeout(() => {
         updateUpcomingNotes(data);
