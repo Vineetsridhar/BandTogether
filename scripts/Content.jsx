@@ -3,6 +3,7 @@ import { socket } from "./Socket";
 import { Buttons } from "./Buttons";
 import AudioPlayer from "./AudioPlayer";
 import { Stack } from "office-ui-fabric-react";
+import { SheetMusic } from "./SheetMusic";
 
 const audioPlayers = {};
 
@@ -56,6 +57,7 @@ export function Content() {
           </li>
         ))}
       </ul>
+      <SheetMusic />
       <Buttons playSound={playSound} instrument={instrument} />
     </Stack>
   );
