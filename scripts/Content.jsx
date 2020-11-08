@@ -16,6 +16,8 @@ export function Content() {
   const [name, setName] = useState("Name");
   const [users, setUsers] = useState({});
   const [score, setScore] = useState(0);
+  const [startTime, setStartTime] = useState(Date.now());
+  const [pressedStatus, setPressedStatus] = useState("");
   const [noteToBePlayed, setNoteToBePlayed] = useState([
     { note: "Piano C4", delay: "0s" },
     { note: "Piano C#4", delay: "5s" },
@@ -30,24 +32,35 @@ export function Content() {
   ]);
 
   const playSound = (note, ins) => {
+    console.log(upcomingNotes);
+    console.log(noteToBePlayed);
+    const timeFromStart = (Date.now() - startTime) / 1000;
     ins = ins ? ins : instrument;
     if (noteToBePlayed !== undefined && noteToBePlayed.length != 0) {
-      if (
-        noteToBePlayed[0].note.split(" ")[1] == note
-      ) {
-        setScore(score + 5);
+      if (noteToBePlayed[0].note.split(" ")[1] == note) {
+        const noteTime =
+          parseInt(
+            noteToBePlayed[0].delay.substr(
+              0,
+              noteToBePlayed[0].delay.length - 1
+            )
+          ) + 5;
+        console.log(timeFromStart, noteTime);
+        const timeDelta = Math.abs(timeFromStart - noteTime);
+        if (timeDelta <= 1.2) {
+          setScore(score + 5);
+          setPressedStatus("Perfect Timing!");
+        } else if (timeDelta <= 4) {
+          setScore(score + 1);
+          setPressedStatus("Too Early :(");
+        }
         const newNoteToBePlayed = noteToBePlayed;
         newNoteToBePlayed.shift();
         updateUpcomingNotes(newNoteToBePlayed);
       }
-      // setTimeout(() => {
-      //   const newNoteToBePlayed = noteToBePlayed;
-      //   newNoteToBePlayed.shift();
-      //   updateUpcomingNotes(newNoteToBePlayed);
-      //   }, 5000);
     }
     console.log(noteToBePlayed);
-    
+
     if (!audioPlayers.hasOwnProperty(ins)) {
       audioPlayers[ins] = AudioPlayer();
       audioPlayers[ins].setInstrument(instrument);
@@ -141,6 +154,7 @@ export function Content() {
       setTimeout(() => {
         updateUpcomingNotes(data);
         setNoteToBePlayed(data);
+        setStartTime(Date.now());
       }, 100);
     });
   }, []);
@@ -217,6 +231,9 @@ export function Content() {
             </div>
           ))}
         </Stack>
+      </Stack.Item>
+      <Stack.Item align="center" styles={stackItemStyles}>
+        <p style={{ width: "50vw" }}>{pressedStatus}</p>
       </Stack.Item>
       <Stack.Item align="center" styles={stackItemStyles}>
         <div style={{ width: "50vw" }}>

@@ -11,6 +11,7 @@ import {
 } from "office-ui-fabric-react";
 import { Animated } from "react-animated-css";
 import { Piano } from "react-piano";
+import { getResponsiveMode } from "office-ui-fabric-react/lib/utilities/decorators/withResponsiveMode";
 
 let music = [];
 
@@ -35,7 +36,12 @@ export function SheetMusic({ upcomingNotes, score }) {
   return (
     <>
       <div
-        style={{ border: "4px solid #0063B1", height: "200px", width: "50vw" }}
+        style={{
+          border: "4px solid #0063B1",
+          height: "200px",
+          width: "50vw",
+          position: "relative",
+        }}
       >
         {upcomingNotes.map(
           (note) => (
@@ -73,6 +79,18 @@ export function SheetMusic({ upcomingNotes, score }) {
             </DefaultButton>
           </p>
         </div>
+
+        <div
+          style={{
+            position: "absolute",
+            borderTop: "2px solid #0063B1",
+            background: "DarkSeaGreen",
+            width: "50vw",
+            height: "50px",
+            bottom: "0px",
+            zIndex: "-1",
+          }}
+        ></div>
       </div>
 
       <p>Current Score: {score}</p>
