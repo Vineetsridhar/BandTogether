@@ -28,7 +28,7 @@ export function Content() {
     audioPlayers[instrument].setInstrument(instrument);
 
     socket.on("key_up", (data) => {
-      console.log("da", data);
+      console.log(data);
     });
 
     socket.on("key_down", (data) => {
