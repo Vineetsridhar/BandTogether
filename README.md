@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# Band Together
+This project was the winner of HackNJIT 2020
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Inspiration
+Many times when you are on Zoom or any similar software, what an individual says will always have some type of delay for someone else listening. During this difficult time, people that love playing music with their friends can not do that using this software to play music synchronously and practice their abilities. Also, bands that want to practice music together can't do that with the current pandemic.
 
-## Available Scripts
+We wanted to build a platform that allows people that love playing music with friends or band members a space to play different instruments at the same time that gets inputted and heard at the same time. This will help those who may be sad around this time being stuck at home and those who love to play music with friends through a fun collaborative manner.
 
-In the project directory, you can run:
+## What it does
+### Band Member or Music Enthusiest Interface
+- People can pick instruments they want to play for the music or band session they are in
+- Then music will start appearing on the screen, for the user to play the correct notes
+- If the correct notes are played, the user can get some points to make this web application more fun 
+- Also, the scoring system can be disregard
 
-### `npm start`
+## How we built it
+We built it using a React frontend and a basic Flask backend.
+Because we needed a real time bidirectional mode of communication, we knew sockets were the way to go. We added socket listeners for when users click a key, and emitted them to all other users in the room. Suddenly, we had a working project where every user could broadcast sounds to all other users in a room.
+- We used a javascript synthesizer framework called SoundFontPlayer
+- For the piano UI, we use a React component called React-Piano
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Challenges we ran into
+Our main issue was figuring out how to play multiple sounds at once. This task seemed to be more difficult than we originally assumed it to be. What we had to do was create different sound objects for each instrument, and play the instrument corresponding to the correct sound instrument. 
+In addition, we had a lot of trouble linking the discord bot with our application. 
+- We used a javascript synthesizer framework called SoundFontPlayer
+- For the piano UI, we use a React component called React-Piano
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Accomplishments that we're proud of
+-We proposed a solution to a common issue musicians have these days. 
+- The scoring system to make playing music more fun
+- Different music notes are played depending on what instruments you use
 
-### `npm test`
+## What we learned
+- How to use the React framework more and connect a backend through the use of python
+- Creating a scoring system where, when the user clicks the approved piano key at the right time to get 5 points
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## What's next for BandTogether
+- A system where users can upload music, for them to play using our scoring mechanism 
+- Making the website more user friendly, and have session ids, for people to join different groups to play music
+- Creating more Instruments UI components instead of buttons for people to use on the website
+-  Allowing, people to connect their own instruments to play music on our website
